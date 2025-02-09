@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- SEO Meta Tags -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Gali Vamsee Krishna Interactive Resume - A dynamic resume showcasing skills, projects, and hobbies with animated background effects."
+    />
+    <meta
+      name="keywords"
+      content="Gali Vamsee Krishna, Interactive Resume, Software Developer, Skills, Projects, Hobbies"
+    />
+    <meta name="author" content="Gali Vamsee Krishna" />
+    <title>Gali Vamsee Krishna - Interactive Resume</title>
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --primary-color: #3b82f6;
+        --secondary-color: #2563eb;
+        --accent-color: #60a5fa;
+        --text-color: #1f2937;
+        --bg-color: #f3f4f6;
+        --card-bg: #ffffff;
+        --timeline-color: #ff6f61;
+        --header-footer-bg: #3b82f6;
+      }
+      .dark-mode {
+        --text-color: #f3f4f6;
+        --bg-color: #1f2937;
+        --card-bg: #374151;
+        --primary-color: #60a5fa;
+        --secondary-color: #3b82f6;
+        --header-footer-bg: #2d2d2d;
+      }
+      /* Reset and basic styling */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+      }
+      body {
+        background: var(--bg-color);
+        color: var(--text-color);
+        font-family: "Segoe UI", sans-serif;
+        line-height: 1.6;
+        position: relative;
+        overflow-x: hidden;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        /* Create a linear gradient with the rainbow colors */
+        background: linear-gradient(
+          45deg,
+          violet,
+          indigo,
+          blue,
+          green,
+          yellow,
+          orange,
+          red
+        );
+        background-size: 400% 400%;
+        /* Animate the background position to create a “waving” effect */
+        animation: rainbowWave 20s ease infinite;
+        z-index: -10; /* Ensure it stays behind your other content */
+        opacity: 0.2; /* Adjust opacity as desired */
+      }
+
+      @keyframes rainbowWave {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      /* Background container for dynamic bubbles & balloons */
+      #background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -5;
+        overflow: hidden;
+      }
+      /* Bubble styling */
+      .bubble {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.7;
+        animation: rise 8s linear infinite;
+      }
+      @keyframes rise {
+        0% {
+          transform: translateY(0);
+          opacity: 0.7;
+        }
+        100% {
+          transform: translateY(-200px);
+          opacity: 0;
+        }
+      }
+      /* Balloon styling */
+      .balloon {
+        position: absolute;
+        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        opacity: 0.8;
+        animation: floatUp 10s linear infinite;
+      }
+      @keyframes floatUp {
+        0% {
+          transform: translateY(0);
+          opacity: 0.8;
+        }
+        100% {
+          transform: translateY(-300px);
+          opacity: 0;
+        }
+      }
+      /* Resume container layout */
+      .resume-container {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 4rem auto 4rem; /* leave space for header/footer */
+        padding: 1rem;
+        position: relative;
+        z-index: 1;
+      }
+      /* Left Profile Column */
+      .profile-column,
+      .main-column {
+        background: var(--card-bg);
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        position: relative;
+      }
+      .profile-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      /* Candidate Name above profile image */
+      .profile-name {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+      .profile-img-container {
+        width: 200px;
+        height: 200px;
+        margin-bottom: 1.5rem;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 4px solid var(--primary-color);
+        cursor: pointer;
+      }
+      .profile-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+      .profile-img-container:hover .profile-img {
+        transform: scale(1.1);
+      }
+      .contact-info {
+        width: 100%;
+        margin: 1.5rem 0;
+      }
+      .contact-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding: 0.8rem;
+        background: var(--bg-color);
+        border-radius: 8px;
+      }
+      .contact-item i {
+        margin-right: 1rem;
+        color: var(--primary-color);
+      }
+      .contact-item a {
+        color: var(--text-color);
+        text-decoration: none;
+      }
+      .contact-item a:hover {
+        text-decoration: underline;
+      }
+      /* Skills & Tools Section */
+      .section.skills-tools {
+        width: 100%;
+      }
+      .section.skills-tools h2 {
+        margin-bottom: 1rem;
+      }
+      .skill-item {
+        margin-bottom: 1rem;
+      }
+      .skill-item h4 {
+        margin-bottom: 0.5rem;
+        color: var(--secondary-color);
+        font-size: 1.1rem;
+      }
+      /* Skills logos with progress pies */
+      .skills-logos {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+      }
+      .skill-logo {
+        text-align: center;
+      }
+      .skill-logo i {
+        font-size: 2rem;
+      }
+      .skill-logo p {
+        margin-top: 0.25rem;
+        font-size: 1rem;
+      }
+      /* Separate Languages section */
+      .languages.section {
+        width: 100%;
+        margin-top: 1rem;
+      }
+      .languages h4 {
+        margin-bottom: 0.5rem;
+        color: var(--secondary-color);
+        font-size: 1.1rem;
+      }
+      .languages p {
+        font-size: 1.1rem;
+      }
+      /* Separate Soft Skills section */
+      .soft-skills.section {
+        width: 100%;
+        margin-top: 1rem;
+      }
+      .soft-skills h4 {
+        margin-bottom: 0.5rem;
+        color: var(--secondary-color);
+        font-size: 1.1rem;
+      }
+      .soft-skills ul {
+        list-style: disc;
+        padding-left: 1.5rem;
+        font-size: 1.1rem;
+      }
+      /* Hobbies Section (placed in main column) */
+      .hobbies {
+        margin-top: 2rem;
+        width: 100%;
+      }
+      .hobbies h2 {
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+        padding-left: 0;
+      }
+      .hobbies ul {
+        list-style: none;
+        padding-left: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+      }
+      .hobbies li {
+        background: var(--bg-color);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      /* Right Column Header & Footer */
+      .main-column header,
+      .main-column footer {
+        text-align: center;
+        background: var(--header-footer-bg);
+        padding: 1rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border: 2px solid var(--accent-color);
+      }
+      /* Underline for Right Column Header using header-footer background */
+      .main-column header h2::after {
+        background: var(--header-footer-bg);
+      }
+      /* Common Section styling */
+      .section {
+        background: var(--card-bg);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+        border: 2px solid var(--accent-color);
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeIn 0.8s forwards;
+      }
+      .section::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 4px;
+        background: linear-gradient(
+          to bottom,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+      }
+      .section h2 {
+        color: var(--text-color);
+        margin-bottom: 1.5rem;
+        padding-left: 1rem;
+        position: relative;
+      }
+      .section h2::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 1rem;
+        width: 50px;
+        height: 3px;
+        background: var(--accent-color);
+      }
+      /* Timeline styling */
+      .timeline-item {
+        position: relative;
+        padding-left: 2rem;
+        margin-bottom: 2rem;
+        border-left: 3px dashed var(--timeline-color);
+      }
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -9px;
+        top: 5px;
+        width: 18px;
+        height: 18px;
+        background: var(--primary-color);
+        border-radius: 50%;
+        border: 2px solid var(--timeline-color);
+      }
+      .timeline-item h3 {
+        color: var(--timeline-color);
+        margin-bottom: 0.5rem;
+      }
+      /* Toggle Switch */
+      .theme-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+      }
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+      }
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: var(--primary-color);
+        transition: 0.4s;
+        border-radius: 34px;
+      }
+      .slider:before {
+        position: absolute;
+        content: "\f185"; /* Sun icon */
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        left: 4px;
+        top: 4px;
+        width: 26px;
+        height: 26px;
+        background-color: var(--card-bg);
+        border-radius: 50%;
+        text-align: center;
+        line-height: 26px;
+        transition: 0.4s;
+        color: var(--primary-color);
+      }
+      input:checked + .slider {
+        background-color: var(--secondary-color);
+      }
+      input:checked + .slider:before {
+        transform: translateX(26px);
+        content: "\f186"; /* Moon icon */
+        color: var(--secondary-color);
+      }
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .resume-container {
+          grid-template-columns: 1fr;
+        }
+        .profile-column {
+          margin-bottom: 2rem;
+        }
+      }
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Dynamic Background Container -->
+    <div id="background"></div>
+
+    <!-- Theme toggle switch -->
+    <div class="theme-toggle">
+      <label class="switch">
+        <input type="checkbox" id="themeCheckbox" />
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="resume-container">
+      <!-- Left Profile Column -->
+      <aside class="profile-column">
+        <!-- Candidate Name Above Profile Image -->
+        <div class="profile-name">Gali Vamsee Krishna</div>
+        <!-- Profile Image -->
+        <div class="profile-img-container">
+          <img src="VK PHOTO.png" alt="Profile Image" class="profile-img" />
+        </div>
+        <div class="contact-info">
+          <div class="contact-item">
+            <i class="fas fa-phone"></i>
+            <a href="tel:+919642526950">+91 9642526950</a>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Kadapa, AP</span>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <a href="mailto:gvks.2003@gmail.com">gvks.2003@gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <i class="fab fa-linkedin"></i>
+            <a
+              href="https://www.linkedin.com/in/vamsee-krishna-gali-746097257"
+              target="_blank"
+              rel="noopener noreferrer"
+              >linkedin.com/in/vamsee-krishna-gali</a
+            >
+          </div>
+          <div class="contact-item">
+            <i class="fab fa-github"></i>
+            <a
+              href="https://github.com/Vamsee1"
+              target="_blank"
+              rel="noopener noreferrer"
+              >github.com/Vamsee1</a
+            >
+          </div>
+        </div>
+        <!-- Skills & Tools Section with Medium Icons and Progress Pies -->
+        <div class="section skills-tools">
+          <h2>Skills &amp; Tools</h2>
+          <div class="skill-item">
+            <h4>Programming Languages</h4>
+            <div class="skills-logos">
+              <div class="skill-logo">
+                <i
+                  class="fab fa-python"
+                  style="color: #3776ab"
+                  title="Python"
+                ></i>
+                <p>90%</p>
+              </div>
+              <div class="skill-logo">
+                <i class="fab fa-java" style="color: #007396" title="Java"></i>
+                <p>80%</p>
+              </div>
+              <div class="skill-logo">
+                <i class="fab fa-html5" style="color: #e34f26" title="HTML"></i>
+                <p>95%</p>
+              </div>
+              <div class="skill-logo">
+                <i
+                  class="fab fa-css3-alt"
+                  style="color: #1572b6"
+                  title="CSS"
+                ></i>
+                <p>90%</p>
+              </div>
+              <div class="skill-logo">
+                <i
+                  class="fab fa-js"
+                  style="color: #f7df1e"
+                  title="JavaScript"
+                ></i>
+                <p>85%</p>
+              </div>
+              <div class="skill-logo">
+                <i
+                  class="fas fa-database"
+                  style="color: #336791"
+                  title="SQL"
+                ></i>
+                <p>75%</p>
+              </div>
+              <div class="skill-logo">
+                <i
+                  class="fab fa-react"
+                  style="color: #61dbfb"
+                  title="React.js"
+                ></i>
+                <p>80%</p>
+              </div>
+            </div>
+            <h4
+              style="
+                font-size: 1rem;
+                color: var(--secondary-color);
+                margin-top: 1rem;
+              "
+            >
+              Tools &amp; Platforms
+            </h4>
+            <div class="skills-logos">
+              <div class="skill-logo">
+                <i
+                  class="fas fa-code"
+                  style="font-size: 2rem; color: #007acc"
+                  title="VS Code"
+                ></i>
+              </div>
+              <div class="skill-logo">
+                <i
+                  class="fab fa-github"
+                  style="font-size: 2rem; color: #181717"
+                  title="GitHub"
+                ></i>
+              </div>
+              <div class="skill-logo">
+                <i
+                  class="fab fa-wordpress"
+                  style="font-size: 2rem; color: #21759b"
+                  title="WordPress"
+                ></i>
+              </div>
+              <div class="skill-logo">
+                <i
+                  class="fab fa-google"
+                  style="font-size: 2rem; color: #4285f4"
+                  title="GCP"
+                ></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Separate Languages Section -->
+        <div class="languages section">
+          <h4>Languages</h4>
+          <p><span>Telugu</span> | <span>English</span></p>
+        </div>
+        <!-- Separate Soft Skills Section -->
+        <div class="soft-skills section">
+          <h4>Soft Skills</h4>
+          <ul>
+            <li>Communication</li>
+            <li>Teamwork</li>
+            <li>Problem Solving</li>
+            <li>Adaptability</li>
+            <li>Time Management</li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Right Main Column -->
+      <main class="main-column">
+        <!-- Right Column Header (centered with underline matching header/footer bg) -->
+        <header class="section">
+          <h2 style="text-align: center">Digital-Resume</h2>
+        </header>
+
+        <!-- Professional Summary -->
+        <section class="section">
+          <h2>Professional Summary</h2>
+          <p>
+            Aspiring software developer eager to contribute through clean code,
+            troubleshooting, and algorithmic thinking. Committed to mastering
+            cutting-edge technologies and collaborating cross-functionally to
+            build scalable, high-performance software solutions.
+          </p>
+        </section>
+        <!-- Education Timeline -->
+        <section class="section">
+          <h2>Education</h2>
+          <div class="timeline-item">
+            <h3>K.S.R.M College of Engineering</h3>
+            <p>B.Tech in CSE (CGPA: 8.59/10)</p>
+            <p>2020 - 2024</p>
+          </div>
+          <div class="timeline-item">
+            <h3>Intermediate Education</h3>
+            <p>State Board, MPC Stream</p>
+            <p>2018 - 2020</p>
+          </div>
+          <div class="timeline-item">
+            <h3>High School</h3>
+            <p>State Board, General Studies</p>
+            <p>2016 - 2018</p>
+          </div>
+        </section>
+        <!-- Experience Timeline -->
+        <section class="section">
+          <h2>Experience</h2>
+          <div class="timeline-item">
+            <h3>Data Science Intern</h3>
+            <p>Indo-Euro Synchronization | Sep 2023 - Oct 2023</p>
+            <ul>
+              <li>
+                Designed and optimized algorithms to enhance system performance
+                in real-time applications.
+              </li>
+              <li>
+                Executed multiple software projects demonstrating robust system
+                design and problem-solving.
+              </li>
+              <li>
+                Utilized Python, SQL, Java, and Git for effective development
+                and debugging.
+              </li>
+            </ul>
+          </div>
+        </section>
+        <!-- Projects Timeline -->
+        <section class="section">
+          <h2>Projects</h2>
+          <div class="timeline-item">
+            <h3>A Novel Secure &amp; Robust Encryption Scheme For HealthCare</h3>
+            <ul>
+              <li>
+                Improved algorithm efficiency by reducing computation time by
+                30%.
+              </li>
+              <li>
+                Enhanced data security with 98% success in preventing
+                unauthorized access.
+              </li>
+              <li>
+                Ensured 99.5% system reliability even under extreme network
+                conditions.
+              </li>
+            </ul>
+          </div>
+          <div class="timeline-item">
+            <h3>Portfolio Website</h3>
+            <ul>
+              <li>
+                Developed a personal portfolio website using HTML, CSS, and
+                JavaScript.
+              </li>
+              <li>
+                Showcased projects, professional skills, and contact information
+                in a responsive design.
+              </li>
+            </ul>
+          </div>
+        </section>
+        <!-- Hobbies Section (placed above Certifications) -->
+        <section class="section hobbies">
+          <h2>Hobbies</h2>
+          <ul>
+            <li><i class="fas fa-book"></i> Reading</li>
+            <li><i class="fas fa-plane"></i> Traveling</li>
+            <li><i class="fas fa-laptop-code"></i> Coding</li>
+            <li><i class="fas fa-camera"></i> Photography</li>
+          </ul>
+        </section>
+        <!-- Certifications -->
+        <section class="section">
+          <h2>Certifications</h2>
+          <ul>
+            <li>Microsoft Azure Fundamentals</li>
+            <li>Data Science For Beginners</li>
+            <li>Cloud Computing (NPTEL)</li>
+            <li>Data Analytics and Visualization Job Simulation</li>
+          </ul>
+        </section>
+        <!-- Right Column Footer -->
+        <footer class="section">
+          <p>&copy; 2025 Gali Vamsee Krishna</p>
+        </footer>
+      </main>
+    </div>
+
+    <script>
+      // Theme Toggle Functionality
+      const themeCheckbox = document.getElementById("themeCheckbox");
+      themeCheckbox.addEventListener("change", () => {
+        document.body.classList.toggle("dark-mode");
+      });
+
+      // Intersection Observer for section animations
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.style.animationPlayState = "running";
+            }
+          });
+        },
+        { threshold: 0.2 }
+      );
+      document.querySelectorAll(".section").forEach((section) => {
+        observer.observe(section);
+      });
+
+      // Function to create dynamic bubbles and balloons in the background
+      function createAnimatedElements() {
+        const bg = document.getElementById("background");
+        // Create bubbles
+        for (let i = 0; i < 20; i++) {
+          const bubble = document.createElement("div");
+          bubble.className = "bubble";
+          const size = Math.random() * 30 + 10; // 10px to 40px
+          bubble.style.width = size + "px";
+          bubble.style.height = size + "px";
+          bubble.style.left = Math.random() * 100 + "%";
+          bubble.style.top = Math.random() * 100 + "%";
+          // Random color
+          const r = Math.floor(Math.random() * 256);
+          const g = Math.floor(Math.random() * 256);
+          const b = Math.floor(Math.random() * 256);
+          bubble.style.background = `rgba(${r},${g},${b},0.7)`;
+          bubble.style.animationDuration = Math.random() * 5 + 5 + "s";
+          bg.appendChild(bubble);
+        }
+        // Create balloons
+        for (let j = 0; j < 8; j++) {
+          const balloon = document.createElement("div");
+          balloon.className = "balloon";
+          const width = Math.random() * 20 + 20; // 20px to 40px width
+          const height = width * 1.2; // Oval shape
+          balloon.style.width = width + "px";
+          balloon.style.height = height + "px";
+          balloon.style.left = Math.random() * 100 + "%";
+          balloon.style.top = Math.random() * 100 + "%";
+          // Random pastel color
+          const r = Math.floor(Math.random() * 156 + 100);
+          const g = Math.floor(Math.random() * 156 + 100);
+          const b = Math.floor(Math.random() * 156 + 100);
+          balloon.style.background = `rgba(${r},${g},${b},0.8)`;
+          balloon.style.animationDuration = Math.random() * 5 + 7 + "s";
+          bg.appendChild(balloon);
+        }
+      }
+      // Create background elements on DOM load
+      document.addEventListener("DOMContentLoaded", createAnimatedElements);
+    </script>
+  </body>
+</html>
